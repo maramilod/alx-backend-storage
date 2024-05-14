@@ -26,7 +26,10 @@ def main():
         "DELETE": 0
     }
     for doc in collection.find({}, {"method": 1}):
-        methods_counts[doc["method"]] += 1
+        try:
+            methods_counts[doc["method"]] += 1
+        except KeyError:
+            pass
 
     print("Methods:")
     for method, count in methods_counts.items():
