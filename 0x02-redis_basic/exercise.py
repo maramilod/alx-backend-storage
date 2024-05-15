@@ -41,11 +41,13 @@ def call_history(method: Callable) -> Callable:
 
 def replay(method: Callable) -> None:
     """
+    function to display the history of
+    calls of a particular function.
     """
     n = method.__qualname__
     cache = redis.Redis()
     num = cache.get(n).decode("utf-8")
-    print("{} was called {} times:".format(name, num))
+    print("{} was called {} times:".format(n, num))
     inputs = cache.lrange(n + ":inputs", 0, -1)
     outputs = cache.lrange(n + ":outputs", 0, -1)
     for i, o in zip(inputs, outputs):
