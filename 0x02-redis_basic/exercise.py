@@ -9,6 +9,7 @@ import redis
 from typing import Union, Callable, Optional, Any
 from functools import wraps
 
+
 def count_calls(method: Callable) -> Callable:
     """
     decorator that takes a single method
@@ -19,6 +20,7 @@ def count_calls(method: Callable) -> Callable:
         self._redis.incr(method.__qualname__)
         return method(self, *args, **kwds)
     return wrapper
+
 
 def call_history(method: Callable) -> Callable:
     """
@@ -35,6 +37,7 @@ def call_history(method: Callable) -> Callable:
         self._redis.rpush(out, str(rv))
         return rv
     return wrapper
+
 
 def replay(method: Callable) -> None:
     """
